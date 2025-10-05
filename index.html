@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>shane walker • links</title>
+  <meta name="description" content="All Shane Walker (scwlkr) links in one place: DFFW Daily, The Media Hangar, and more." />
+  <meta property="og:title" content="shane walker – links" />
+  <meta property="og:description" content="All Shane Walker links in one place." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/img/pfp-square.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="logo/scwlkr-logo_144px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="logo/scwlkr-logo_144px.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="logo/scwlkr-logo_144px.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Brand palette from image: 08090A, 797B84, FFFFFF, F2F5EA, 23CE6B */
+    :root{
+      --bg: #08090A;          /* near-black */
+      --bg-muted: #0C0E10;    /* slightly lighter */
+      --text: #F2F5EA;        /* off-white */
+      --text-muted:#9CA0AA;   /* soft gray */
+      --card:#0C0F12;         /* card on dark */
+      --accent:#23CE6B;       /* green */
+      --accent-2:#23CE6B;     /* single-accent */
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      --ring: 0 0 0 6px rgba(35,206,107,.20);
+      --link-gradient: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.06));
+    }
+    html[data-theme="light"]{
+      --bg:#F2F5EA; --bg-muted:#FFFFFF; --text:#08090A; --text-muted:#797B84; --card:#ffffff; --accent:#23CE6B; --accent-2:#23CE6B; --border:rgba(8,9,10,.10); --shadow:0 10px 30px rgba(2,6,23,.08); --ring: 0 0 0 6px rgba(35,206,107,.18); --link-gradient: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.04));
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:JetBrains Mono,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,monospace; color:var(--text); background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(35,206,107,.12), transparent 60%),
+        radial-gradient(800px 400px at 110% 10%, rgba(121,123,132,.18), transparent 60%),
+        var(--bg);
+      min-height:100svh; display:grid; place-items:center; padding:28px;
+    }
+    .wrap{width:100%; max-width:720px}
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:24px; box-shadow:var(--shadow);
+      padding:28px; position:relative; overflow:hidden;
+    }
+    .header{display:flex; align-items:center; gap:18px;}
+    .avatar{width:82px; height:82px; border-radius:50%; border:1px solid var(--border); box-shadow:var(--shadow); flex:0 0 auto; object-fit:cover}
+    .title{display:flex; flex-direction:column; gap:6px}
+    h1{font-size:28px; line-height:1.15; margin:0}
+    .bio{margin:0; color:var(--text-muted)}
+    .badges{margin-top:10px; display:flex; flex-wrap:wrap; gap:8px}
+    .badge{font-size:12px; padding:6px 10px; border:1px solid var(--border); border-radius:999px; color:var(--text-muted)}
+
+    .links{margin-top:22px; display:grid; gap:14px}
+    
+    /* Featured links styling */
+    .link-btn.featured{
+      padding:20px 24px; border-radius:18px; border:2px solid var(--border);
+      background: linear-gradient(135deg, var(--card), var(--bg-muted));
+      box-shadow: var(--shadow), 0 0 20px rgba(35,206,107,.1);
+      position:relative; overflow:hidden;
+    }
+    
+    .link-btn.featured::before{
+      content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(35,206,107,.08), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+    
+    .link-btn.featured .icon{
+      width:32px; height:32px; opacity:1;
+    }
+    
+    .link-btn.featured .link-sub{
+      font-size:14px; margin-top:4px;
+    }
+    
+    .link-btn{
+      display:flex; align-items:center; gap:12px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid var(--border); background:var(--link-gradient);
+      text-decoration:none; color:var(--text); font-weight:600; letter-spacing:.2px; position:relative; overflow:hidden;
+      transition:transform .08s ease, border-color .2s ease, background .2s ease;
+    }
+    .link-btn:hover{ transform: translateY(-1px); border-color: rgba(35,206,107,.5); }
+    .link-btn:active{ transform: translateY(0); }
+    .link-btn .icon{width:22px; height:22px; opacity:.9}
+    .link-sub{font-weight:500; color:var(--text-muted); font-size:12px}
+
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    
+    /* Mobile responsive adjustments */
+    @media (max-width:560px){ 
+      .grid-2{grid-template-columns:1fr}
+      .header{flex-direction:column; text-align:center; gap:16px}
+      .title{align-items:center}
+      h1{font-size:24px; text-align:center}
+      .card{padding:20px}
+      .wrap{padding:16px}
+      .theme-toggle{top:10px; right:10px; padding:6px 10px; font-size:11px}
+    }
+    
+    @media (max-width:400px){
+      h1{font-size:22px}
+      .card{padding:16px}
+      .wrap{padding:12px}
+      .avatar{width:70px; height:70px}
+    }
+
+    .footer{margin-top:18px; display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .social{display:flex; gap:10px}
+    .icon-btn{display:grid; place-items:center; width:40px; height:40px; border-radius:10px; border:1px solid var(--border); background:var(--bg-muted); text-decoration:none; color:var(--text)}
+    .brand{opacity:.7; font-size:12px}
+    .sep{height:1px; background:var(--border); margin:22px 0}
+
+    .theme-toggle{ position:absolute; top:14px; right:14px; background:var(--bg-muted); border:1px solid var(--border); border-radius:999px; padding:8px 12px; display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; color:var(--text-muted) }
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+
+    .accent{
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="region" aria-label="Link hub">
+      <button class="theme-toggle" id="themeToggle" aria-live="polite" aria-pressed="true">
+        <span id="themeLabel">Light</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+
+      <header class="header">
+        <img class="avatar" src="assets/img/pfp-square.jpeg" alt="Shane Walker profile photo" />
+        <div class="title">
+          <h1>shane walker <span class="accent">• @scwlkr</span></h1>
+          <p class="bio">Home base for my projects and businesses — DFFW Daily, The Media Hangar, and whatever comes next.</p>
+          <div class="badges">
+            <span class="badge">Entrepreneur</span>
+            <span class="badge">Texas • CST</span>
+            <span class="badge">Email: scwlkr8@gmail.com</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="sep" role="presentation"></div>
+
+      <main class="links" id="links">
+        <!-- FEATURED LINKS -->
+        <a class="link-btn featured" href="https://themediahangar.com" target="_blank" rel="noopener" aria-label="The Media Hangar (opens in new tab)">
+                      <img src="https://images.squarespace-cdn.com/content/v1/66071afd6c7fa060a948fdbe/6d140f5a-8ae8-4009-811e-017a60287cf0/TMH+Logo_White+Logo.png?format=1500w" alt="Mail" class="icon" />
+          <div>
+            <div>The Media Hangar</div>
+            <div class="link-sub">Real estate media & production</div>
+          </div>
+        </a>
+        <a class="link-btn featured" href="https://dffwdaily.com" target="_blank" rel="noopener">
+                      <img src="https://dffwdaily.com/wp-content/uploads/2025/07/cropped-IMG_0087-128x128.png" alt="Newspaper" class="icon" />
+          <div>
+            <div>DFFW Daily</div>
+            <div class="link-sub">News, local stories & updates</div>
+          </div>
+        </a>
+        <a class="link-btn featured" href="mailto:scwlkr8@gmail.com" target="_self">
+                      <img src="https://cdn.simpleicons.org/gmail/23ce6b" alt="Mail" class="icon" />
+          <div>
+            <div>Email</div>
+            <div class="link-sub">scwlkr8@gmail.com</div>
+          </div>
+        </a>
+
+        <!-- SOCIAL GRID -->
+        <div class="grid-2">
+          <a class="link-btn" href="https://instagram.com/scwlkr_" target="_blank" rel="noopener" aria-label="Instagram">
+            <img src="https://cdn.simpleicons.org/instagram/23ce6b" alt="Instagram" class="icon" />
+            <div>Instagram</div>
+          </a>
+          <a class="link-btn" href="https://www.tiktok.com/@scwlkr" target="_blank" rel="noopener" aria-label="TikTok">
+            <img src="https://cdn.simpleicons.org/tiktok/23ce6b" alt="TikTok" class="icon" />
+            <div>TikTok</div>
+          </a>
+          <a class="link-btn" href="https://x.com/scwlkr" target="_blank" rel="noopener" aria-label="X">
+            <img src="https://cdn.simpleicons.org/x/23ce6b" alt="X" class="icon" />
+            <div>X (Twitter)</div>
+          </a>
+          <a class="link-btn" href="https://linkedin.com/in/shane-walker-384a671a3" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <img src="https://api.iconify.design/entypo-social:linkedin.svg?color=%2323ce6b" alt="LinkedIn" class="icon" />
+            <div>LinkedIn</div>
+          </a>
+
+          <a class="link-btn" href="https://letterboxd.com/movieswitboat" target="_blank" rel="noopener" aria-label="Letterboxd">
+            <img src="https://cdn.simpleicons.org/letterboxd/23ce6b" alt="Letterboxd" class="icon" />
+            <div>Letterboxd</div>
+          </a>
+          <a class="link-btn" href="#" aria-label="Discord username" onclick="alert('Discord profile links require a numeric User ID. Share an invite link instead, or provide your ID to enable a direct link.'); return false;">
+            <img src="https://cdn.simpleicons.org/discord/23ce6b" alt="Discord" class="icon" />
+            <div>Discord</div>
+            <div class="link-sub">@lilboat_</div>
+          </a>
+        </div>
+
+
+      </main>
+
+      <div class="sep" role="presentation"></div>
+
+      <footer class="footer">
+        <div class="social" aria-label="Social icons">
+          <a class="icon-btn" href="https://instagram.com/scwlkr_" target="_blank" rel="noopener" aria-label="Instagram"><img src="https://cdn.simpleicons.org/instagram/23ce6b" alt="Instagram" width="18" height="18" /></a>
+          <a class="icon-btn" href="mailto:scwlkr8@gmail.com" aria-label="Email"><img src="https://cdn.simpleicons.org/gmail/23ce6b" alt="Email" width="18" height="18" /></a>
+          <a class="icon-btn" href="https://x.com/scwlkr" target="_blank" rel="noopener" aria-label="X"><img src="https://cdn.simpleicons.org/x/23ce6b" alt="X" width="18" height="18" /></a>
+          <a class="icon-btn" href="https://linkedin.com/in/shane-walker-384a671a3" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://api.iconify.design/entypo-social:linkedin.svg?color=%2323ce6b" alt="LinkedIn" width="18" height="18" /></a>
+        </div>
+        <div class="brand">© <span id="year"></span> scwlkr</div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Dark / Light theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+    const root = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    
+    // Default to light mode if no theme is stored
+    if(stored){ 
+      root.setAttribute('data-theme', stored); 
+      themeLabel.textContent = stored === 'dark' ? 'Light' : 'Dark'; 
+      themeToggle.setAttribute('aria-pressed', stored==='dark'); 
+    } else {
+      // Set default to light mode
+      root.setAttribute('data-theme', 'light');
+      themeLabel.textContent = 'Dark';
+      themeToggle.setAttribute('aria-pressed', false);
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next); 
+      localStorage.setItem('theme', next);
+      themeLabel.textContent = next === 'dark' ? 'Light' : 'Dark';
+      themeToggle.setAttribute('aria-pressed', next==='dark');
+    });
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Optional: append UTM params to all outbound links so you can see traffic sources in analytics
+    const params = new URLSearchParams(window.location.search);
+    function mergeParams(url){ try{ const u = new URL(url); params.forEach((v,k)=>{ if(!u.searchParams.has(k)) u.searchParams.set(k,v); }); return u.toString(); }catch{ return url; } }
+    document.querySelectorAll('a[href^="http"]').forEach(a=>{ a.href = mergeParams(a.href); });
+
+    // Keyboard navigation support: press 1..9 to focus links
+    const focusables = [...document.querySelectorAll('.link-btn')];
+    window.addEventListener('keydown', (e)=>{
+      if(/^[1-9]$/.test(e.key)){
+        const idx = parseInt(e.key,10)-1; if(focusables[idx]){ focusables[idx].focus(); focusables[idx].classList.add('ring'); setTimeout(()=>focusables[idx].classList.remove('ring'), 300); }
+      }
+    });
+  </script>
+</body>
+</html>
