@@ -26,7 +26,3 @@ Replace `assets/img/profile.jpg` with your photo. Use a square image (e.g. 800×
 ## 🧩 Notes
 - No external JS dependencies. Optional Google Fonts are loaded via `<link>` tags — remove them if you prefer system fonts.
 - Lighthouse-friendly: semantic HTML, accessible labels, reduced motion preference respected.# scwlkr_website
-
-
-## Test
-is this working?
