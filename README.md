@@ -2,6 +2,11 @@
 
 A clean, fast, single-file link-in-bio page for **scwlkr**. Drop this into a GitHub repo (or your Hostinger file manager) and you're live.
 
+## Featured Projects
+- **The Media Hangar** - Real estate media & production
+- **DFFW Daily** - News, local stories & updates
+- **Dink Boys** - dinkboys.com
+
 ## 🔧 How to use
 1. **Replace your profile image:** put your photo at `assets/img/profile.jpg` (or `.png`). Keep the name `profile.jpg` (or update the HTML `src`).
 2. **Edit links & bio:** open `index.html` and update the text/URLs in the LINKS section.

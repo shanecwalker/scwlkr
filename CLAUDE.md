@@ -17,6 +17,7 @@ This is a static link-in-bio website for scwlkr (Shane Walker). It's a fully sel
 
 ### Images
 - **assets/img/pfp-square.jpeg** (139KB) - Currently used profile photo
+- **assets/img/dink-boys-logo.png** - Dink Boys brand logo
 - **logo/scwlkr-logo_144px.png** (2.2KB) - Currently used favicon
 - **Unused images**: pfp.jpeg, favicon.png, favicon.svg, profile.svg, instagram_logo.png
 
@@ -38,9 +39,10 @@ This is a static link-in-bio website for scwlkr (Shane Walker). It's a fully sel
 
 ### Content Sections
 1. **Header** - Profile photo, name, bio, theme toggle
-2. **Featured Links** (3 large cards with shimmer effect):
+2. **Featured Links** (4 large cards with shimmer effect):
    - The Media Hangar (themediahangar.com)
    - DFFW Daily (dffwdaily.com)
+   - Dink Boys (dinkboys.com)
    - Email (scwlkr8@gmail.com)
 3. **Social Grid** (6 links in responsive grid):
    - Instagram (@scwlkr_)
