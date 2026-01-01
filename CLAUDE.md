@@ -17,9 +17,10 @@ This is a static link-in-bio website for scwlkr (Shane Walker). It's a fully sel
 
 ### Images
 - **assets/img/pfp-square.jpeg** (139KB) - Currently used profile photo
-- **assets/img/dink-boys-logo.png** - Dink Boys brand logo
+- **assets/img/dink-boys-logo.png** (105KB) - Dink Boys brand logo (used in featured links)
 - **logo/scwlkr-logo_144px.png** (2.2KB) - Currently used favicon
-- **Unused images**: pfp.jpeg, favicon.png, favicon.svg, profile.svg, instagram_logo.png
+- **assets/img/scwlkr_colors.png** (40KB) - Brand color palette reference
+- **Unused images**: pfp.jpeg (156KB), favicon.png, favicon.svg, profile.svg, instagram_logo.png
 
 ### Brand Assets
 - **logo/scwlkr-logo_V1.png** - Full-size brand logo (35KB)
@@ -225,10 +226,11 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
 ## File Structure Reference
 
 ```
-/Users/shanewalker/Desktop/scwlkr/
+/Users/shanewalker/Desktop/dev/scwlkr/
 ├── index.html                    # Main site (production-ready)
 ├── README.md                     # Project documentation
 ├── CLAUDE.md                     # This file (Claude Code instructions)
+├── CHANGELOG.md                  # Version history
 ├── .gitignore                    # Git ignore rules (macOS files)
 ├── public_html/                  # Empty (FTP deployment staging)
 ├── assets/
@@ -238,6 +240,8 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
 │   │   └── main.js              # Utility functions (unused)
 │   └── img/
 │       ├── pfp-square.jpeg      # Profile photo (USED)
+│       ├── dink-boys-logo.png   # Dink Boys logo (USED)
+│       ├── scwlkr_colors.png    # Brand color palette reference
 │       ├── pfp.jpeg             # Alternative photo (unused)
 │       ├── favicon.png          # Alternative favicon (unused)
 │       ├── favicon.svg          # SVG favicon (unused)
