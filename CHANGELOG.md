@@ -6,9 +6,80 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Added
-- Comprehensive CLAUDE.md documentation with complete feature reference
-- CHANGELOG.md file for version tracking
+## [2.0.0] - 2026-01-01
+
+### Added - Complete Website Redesign
+- **"Hovering Bricks" design concept** - Unique spatial layout with floating elements
+- **3D animation system** - Perpetual gentle floating (2-3px) on all cards
+- **3D hover extrusion effect** - Cards slide forward 10px on z-axis with green glow
+- **Strict 5-color palette** - #000000, #888888, #FFFFFF, #23CE6B, #2541B2
+- **Grid-based layout** - Header → Main content + Sidebar → Footer architecture
+- **Business cards prominence** - 3 large floating cards (The Media Hangar, Dink Boys, DFFW Daily)
+- **Compact personal links sidebar** - 7 icon + label links in vertical list
+- **GPU-accelerated animations** - `will-change: transform` and `translate3d()` for 60fps
+- **Staggered animation delays** - Each card floats with offset timing for organic feel
+- **Touch device optimizations** - Press feedback, disabled hover on mobile, 44px touch targets
+- **Enhanced accessibility** - Green focus indicators, improved keyboard navigation
+- **Reduced motion detection** - JavaScript detection with CSS media query support
+
+### Changed - Major Breaking Changes
+- **Complete HTML restructure** - From centered card to full-viewport grid layout
+- **Fixed dark theme** - Removed theme toggle button and light mode entirely
+- **Solid black background** - Zero gradients (was radial gradient backgrounds)
+- **Minimal header design** - 50px profile photo + name + one-line bio only
+- **Responsive breakpoints** - Now 960px (desktop sidebar) and 560px (mobile stack)
+- **Typography updates** - Added font-weight 500, updated sizing with clamp()
+- **Shadow system** - Layered shadows for depth perception (sm/md/lg/glow)
+- **Card styling** - Semi-transparent gray backgrounds instead of solid cards
+- **Animation approach** - Constant floating vs. hover-only shimmer effect
+- **Footer position** - Right-aligned (desktop) / centered (mobile) vs. center-aligned
+
+### Removed
+- Theme toggle button and associated JavaScript
+- Light theme CSS variables and localStorage persistence
+- Keyboard navigation (1-9 keys to focus links)
+- Shimmer animation effect on featured links
+- Radial gradient backgrounds
+- Badge elements (Entrepreneur, Location, Email badges)
+- Social icon links in footer (consolidated to sidebar)
+- All rounded corners except 4px on profile photo
+
+### Technical
+- **Color palette:** Pure black #000000 (no gradients), #888888 (gray), #FFFFFF (white), #23CE6B (green), #2541B2 (blue)
+- **3D transform space:** `perspective: 1200px` on body
+- **Floating animation:** 5s ease-in-out infinite for business cards, 4s for personal links
+- **Hover effect:** `translate3d(0, -3px, 10px)` with bounce easing `cubic-bezier(0.34, 1.56, 0.64, 1)`
+- **Responsive grid:** `auto-fit, minmax(280px, 1fr)` for business cards
+- **CSS custom properties:** 17 variables for spacing, typography, shadows, timing
+- **Performance:** ~15KB HTML, GPU-accelerated animations, inline everything
+
+### Design Philosophy
+- Inspired by Apple, Nike, Stripe, and BAUHAUS principles
+- Minimal, timeless aesthetic - no AI-generated look
+- Spatial architecture - elements float off black wall surface
+- Perpetual motion - creates organic, living quality
+- 3D depth perception - hover extrusion like bricks sliding from wall
+- Strict geometric precision - clean rectangles, consistent spacing
+
+### Content Updates
+- Simplified bio to "Entrepreneur • Dallas, TX"
+- Business descriptions updated for clarity
+- Added "Connect" header to personal links section
+- All links maintain UTM parameter forwarding
+
+### Accessibility Improvements
+- Green focus indicators (#23CE6B) on all interactive elements
+- Improved color contrast ratios (White on Black: 21:1 AAA)
+- Semantic HTML with proper ARIA labels
+- Tab navigation through all links
+- Reduced motion support via media query
+- 44px minimum touch targets on mobile
+
+### Files Modified
+- `index.html` - Complete rewrite (548 lines → 548 lines with entirely new structure)
+- `CLAUDE.md` - Updated with new design documentation
+- `CHANGELOG.md` - This file
+- `README.md` - Updated with new design information
 
 ## [1.0.0] - 2025-10-04
 

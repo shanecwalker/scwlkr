@@ -4,27 +4,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static link-in-bio website for scwlkr (Shane Walker). It's a fully self-contained single-page site with no build process, no dependencies, and no runtime requirements beyond a web browser. All functionality is embedded directly in `index.html`.
+This is a static link-in-bio website for scwlkr (Shane Walker) featuring a unique "hovering bricks" design concept. It's a fully self-contained single-page site with no build process, no dependencies, and no runtime requirements beyond a web browser. All functionality is embedded directly in `index.html`.
+
+## Design Philosophy
+
+**"Blank Wall with Hovering Bricks"**
+- Solid black background (#000000) with zero gradients - elements appear to float off the surface
+- Perpetual gentle floating animation creates organic, living quality
+- 3D hover extrusion makes cards slide forward like bricks from a wall
+- Minimal, timeless aesthetic inspired by Apple, Nike, Stripe, and BAUHAUS
+- Strict 5-color palette to avoid AI-generated look
 
 ## Architecture
 
 ### Core File
 - **index.html** - Self-contained HTML page with embedded CSS and JavaScript. This is the entire production site.
 
-### Alternative/Unused Assets
-- **assets/css/styles.css** - Alternative stylesheet with different theme approach (NOT linked in index.html)
-- **assets/js/main.js** - Utility functions for copy-to-clipboard and reduced motion (NOT linked in index.html)
-
 ### Images
-- **assets/img/pfp-square.jpeg** (139KB) - Currently used profile photo
-- **assets/img/dink-boys-logo.png** (105KB) - Dink Boys brand logo (used in featured links)
-- **logo/scwlkr-logo_144px.png** (2.2KB) - Currently used favicon
+- **assets/img/pfp-square.jpeg** (139KB) - Profile photo in header
+- **assets/img/dink-boys-logo.png** (105KB) - Dink Boys business logo
+- **logo/scwlkr-logo_144px.png** (2.2KB) - Favicon
 - **assets/img/scwlkr_colors.png** (40KB) - Brand color palette reference
 - **Unused images**: pfp.jpeg (156KB), favicon.png, favicon.svg, profile.svg, instagram_logo.png
 
 ### Brand Assets
 - **logo/scwlkr-logo_V1.png** - Full-size brand logo (35KB)
 - **logo/scwlkr-logo_V1.ai** - Adobe Illustrator source file (245KB PDF format)
+
+### Alternative/Unused Assets
+- **assets/css/styles.css** - Old stylesheet with different theme approach (NOT linked in index.html)
+- **assets/js/main.js** - Utility functions for copy-to-clipboard and reduced motion (NOT linked in index.html)
 
 ### Deployment
 - **public_html/** - Empty directory for Hostinger/FTP deployment staging
@@ -34,138 +43,195 @@ This is a static link-in-bio website for scwlkr (Shane Walker). It's a fully sel
 ### HTML Structure
 - Semantic HTML5 with proper ARIA labels and accessibility attributes
 - Meta tags for SEO, Open Graph, and Twitter Cards
-- Multiple favicon sizes (16x16, 32x32, 180x180, 192x192)
-- Google Fonts: JetBrains Mono (weights: 400, 600, 700) with preconnect optimization
+- Multiple favicon sizes (16x16, 32x32, 180x180)
+- Google Fonts: JetBrains Mono (weights: 400, 500, 600, 700) with preconnect optimization
 - External icon resources from cdn.simpleicons.org and api.iconify.design
 
+### Layout Architecture
+
+**Grid-based structure:**
+```
+<body> (solid black wall, perspective: 1200px)
+├── <header> - Minimal profile (50px photo + name + bio)
+├── <div class="main-layout"> (grid: main + sidebar on desktop)
+│   ├── <main> - Business cards section
+│   │   └── .business-cards (3 floating cards in responsive grid)
+│   └── <aside> - Personal links sidebar (7 compact links)
+└── <footer> - Copyright with dynamic year
+```
+
 ### Content Sections
-1. **Header** - Profile photo, name, bio, theme toggle
-2. **Featured Links** (4 large cards with shimmer effect):
-   - The Media Hangar (themediahangar.com)
-   - DFFW Daily (dffwdaily.com)
-   - Dink Boys (dinkboys.com)
-   - Email (scwlkr8@gmail.com)
-3. **Social Grid** (6 links in responsive grid):
+
+1. **Header** - Minimal top section
+   - Profile photo (50px square with 4px border-radius)
+   - Name: "Shane Walker"
+   - Bio: "Entrepreneur • Dallas, TX"
+
+2. **Business Cards** (3 large floating cards):
+   - The Media Hangar (themediahangar.com) - Real estate media & production
+   - Dink Boys (dinkboys.com) - Pickleball brand
+   - DFFW Daily (dffwdaily.com) - Dallas-Fort Worth news
+
+3. **Personal Links Sidebar** (7 compact icon + label links):
    - Instagram (@scwlkr_)
    - TikTok (@scwlkr)
    - X/Twitter (@scwlkr)
    - LinkedIn (shane-walker-384a671a3)
    - Letterboxd (movieswitboat)
    - Discord (@scwlkr)
-4. **Footer** - Copyright with dynamic year, icon links (Instagram, Email, X, LinkedIn)
+   - Email (scwlkr8@gmail.com)
+
+4. **Footer** - Simple copyright with dynamic year
 
 ### CSS Features (Embedded)
 
-**Theme System:**
-- Dual theme: dark (default) and light modes
-- Toggle via `data-theme="light"` attribute on `<html>` element
-- CSS custom properties for all colors and spacing
-- Brand colors:
-  - `--bg-dark: #08090A` (near-black background)
-  - `--text-muted: #797B84` (gray text)
-  - `--accent: #23CE6B` (brand green - primary action color)
-  - Light mode: `#F2F5EA` (off-white background), `#0a0a0a` (text)
+**Color System (Strict 5-color palette):**
+```css
+--wall-black: #000000;    /* Background only - no gradients */
+--card-gray: #888888;     /* Card backgrounds, borders, muted text */
+--text-white: #FFFFFF;    /* Primary text */
+--accent-green: #23CE6B;  /* Hover states, primary actions, icons */
+--accent-blue: #2541B2;   /* Secondary highlights (reserved for future use) */
+```
+
+**3D Transform System:**
+- Body has `perspective: 1200px` to enable 3D space
+- Cards use `transform-style: preserve-3d` for depth
+- GPU acceleration via `will-change: transform` and `translate3d()`
+
+**Floating Animation:**
+- Business cards: 5s infinite ease-in-out, 3px vertical movement
+- Personal links: 4s infinite ease-in-out, 1px vertical movement
+- Staggered animation delays (0s, 0.6s, 1.2s for business cards)
+- Keyframe: `translate3d(0, 0, 0)` → `translate3d(0, -3px, 0)` → back
+
+**3D Hover Extrusion Effect:**
+- On hover: `transform: translate3d(0, -3px, 10px)` (10px forward on z-axis)
+- Shadow deepens: `0 20px 40px rgba(0,0,0,0.6)`
+- Green glow border: `0 0 0 2px rgba(35,206,107,0.4)`
+- Green outer glow: `0 0 20px rgba(35,206,107,0.2)`
+- Bounce easing: `cubic-bezier(0.34, 1.56, 0.64, 1)`
+- Hover overrides floating animation with `!important`
+
+**Typography:**
+- Font: JetBrains Mono (400, 500, 600, 700)
+- Header: `clamp(20px, 2.5vw, 28px)` with -0.02em letter-spacing
+- Business cards: 20px titles, 14px descriptions
+- Personal links: 14px labels
+- Footer: 12px gray text
 
 **Visual Design:**
-- Radial gradient backgrounds with layered accent colors
-- Card-based layout with shadows, borders, and hover effects
-- Featured links have special styling with larger size and visual prominence
-- Smooth transitions (100-300ms) on all interactive elements
-- Reduced motion support via `@media (prefers-reduced-motion: reduce)`
-
-**Animations:**
-- `@keyframes shimmer` - 3-second infinite shimmer effect on featured links (horizontal gradient sweep)
-- Hover transforms: `translateY(-1px)` lift effect on links
-- Focus ring animation (300ms) for keyboard navigation feedback
+- Zero gradients - solid black background only
+- Card backgrounds: `rgba(136, 136, 136, 0.12)` (semi-transparent gray)
+- Borders: `rgba(136, 136, 136, 0.2)` (subtle gray)
+- Layered box shadows for depth perception
+- Minimal border-radius (4px on profile photo only)
 
 **Responsive Design:**
-- **Desktop (>560px)**: Two-column social grid, horizontal header layout
-- **Tablet (≤560px)**: Single-column grid, vertical header layout
-- **Mobile (≤400px)**: Reduced sizes (avatar 70px, smaller padding)
+- **Desktop (>960px)**: Sidebar right (240px), business cards in auto-fit grid
+- **Tablet (560-960px)**: Sidebar below, cards 2-column, reduced floating (2px)
+- **Mobile (<560px)**: Single column stack, minimal floating (1px), centered layout
+
+**Touch Optimizations:**
+- Detects `(hover: none) and (pointer: coarse)`
+- Disables hover extrusion on touch devices
+- Adds press feedback: `scale(0.98)` on `:active`
+- Ensures 44px minimum touch targets on personal links
+
+**Reduced Motion Support:**
+- Respects `prefers-reduced-motion: reduce`
+- Disables all animations and transitions
+- Sets duration to `0.01ms` with single iteration
 
 ### JavaScript Features (Embedded)
 
-1. **Theme Toggle System:**
-   - Toggles between dark and light themes on button click
-   - Persists preference in `localStorage.setItem('theme', ...)`
-   - Loads saved preference on page load: `localStorage.getItem('theme')`
-   - Defaults to light mode if no preference saved
-   - Updates button `aria-pressed` attribute for accessibility
-   - Updates button label text ("Dark" or "Light")
-
-2. **Dynamic Copyright Year:**
+1. **Dynamic Copyright Year:**
    - Auto-updates footer year using `new Date().getFullYear()`
    - Eliminates need for annual manual updates
 
-3. **UTM Parameter Forwarding:**
+2. **UTM Parameter Forwarding:**
    - Captures all URL query parameters on page load
-   - Automatically appends them to all outbound HTTP links (not mailto/tel)
+   - Automatically appends them to all outbound HTTP links (not mailto)
    - Enables analytics tracking of traffic sources (e.g., ?utm_source=instagram)
    - Error-safe with try/catch around URL parsing
    - Preserves original link behavior if parameter addition fails
 
-4. **Keyboard Navigation:**
-   - Press number keys 1-9 to focus corresponding links
-   - Visual feedback: Adds `focus-ring` class with animation (removed after 300ms)
-   - Accessibility enhancement for power users
-   - Window-level keydown event listener
+3. **Reduced Motion Detection:**
+   - Detects `prefers-reduced-motion: reduce` media query
+   - Adds `.no-motion` class to document element (for potential future use)
+   - CSS handles actual animation disabling via media query
 
-5. **Initialization:**
-   - Runs on DOMContentLoaded to ensure DOM is ready
-   - Initializes theme from localStorage
-   - Sets up all event listeners
-   - Applies UTM parameters to links
-
-## Alternative Files (Not Currently Used)
-
-### assets/css/styles.css
-An alternative stylesheet with a different design approach:
-- **Theme Method:** Uses `@media (prefers-color-scheme: light)` instead of toggle button
-- **Colors:** `#0a0a0a`, `#F7F5F2` (parchment), `#6B4C47` (mahogany) - warmer palette
-- **Typography:** System font stack instead of Google Fonts
-- **Layout:** Three-column header, no featured links concept (all links equal)
-- **Modern CSS:** Uses `color-mix()` function and oklab color space
-- **Animation:** `@keyframes pop` with cubic-bezier easing
-- **Utility:** Includes `.visually-hidden` class and copy button styles
-
-### assets/js/main.js
-Utility functions for potential future use:
-- **Copy-to-Clipboard:** Finds elements with `data-copy` attribute, uses `navigator.clipboard.writeText()`, provides "Copied!" feedback for 1400ms
-- **Reduced Motion:** Detects `prefers-reduced-motion: reduce` and disables ALL animations/transitions via injected `<style>` tag
-- **Note:** More aggressive accessibility approach than index.html's CSS-only method
+**Removed Features (from previous version):**
+- Theme toggle system (fixed dark theme only)
+- Light theme support and localStorage persistence
+- Keyboard navigation (1-9 keys to focus links)
 
 ## Development Workflow
 
 ### Making Changes
 1. Edit `index.html` directly - it's the entire site
 2. Open in browser to test (no server required for local testing)
-3. Test both themes with the toggle button
-4. Test keyboard navigation (press 1-9 keys)
-5. Test responsive design at various screen sizes (560px and 400px breakpoints)
-6. Verify reduced motion support in browser settings
+3. Test floating animations and hover extrusion effects
+4. Test responsive design at 960px and 560px breakpoints
+5. Verify reduced motion support in browser settings
+6. Test keyboard navigation (Tab key)
 
-### Adding Links
-- **Featured links:** Add to `.featured-links` section (large cards with shimmer)
-- **Social links:** Add to `.social-grid` section (smaller grid items)
-- **Footer icons:** Add to `footer .social-icons` (minimal icon-only links)
-- **Important:** Maintain `rel="noopener"` on external links for security
-- **Note:** Keyboard navigation supports up to 9 links (1-9 keys)
+### Adding Business Cards
+Edit the `.business-cards` section in index.html:
+```html
+<a href="https://url.com" target="_blank" rel="noopener" class="business-card">
+  <img src="logo.png" alt="Business name" class="business-logo" />
+  <h2>Business Name</h2>
+  <p class="description">Brief description</p>
+  <span class="cta">Visit site →</span>
+</a>
+```
+- Maintain `rel="noopener"` on external links for security
+- Logo should be 48x48px (will scale to fit)
+- Keep descriptions concise (1-2 lines)
 
-### Modifying Theme Colors
-Edit CSS custom properties in `index.html`:
-- **Dark theme:** `:root` selector (lines ~40-50)
-- **Light theme:** `html[data-theme="light"]` selector (lines ~55-65)
-- **Brand green:** `--accent: #23CE6B` - used for buttons, featured links, hover states
+### Adding Personal Links
+Edit the `.personal-links` section in index.html:
+```html
+<a href="https://url.com" target="_blank" rel="noopener" class="personal-link">
+  <img src="https://cdn.simpleicons.org/platform/23ce6b" alt="" class="link-icon" />
+  <span>Platform Name</span>
+</a>
+```
+- Use Simple Icons CDN with green color: `?color=%2323ce6b` (URL-encoded #23CE6B)
+- Icons are 20x20px
+- Ensure minimum 44px touch target (handled by CSS)
 
-### Testing UTM Parameters
-Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=launch`) and verify they're appended to outbound links.
+### Modifying Colors
+Edit CSS custom properties in `index.html` `:root` selector (lines ~26-31):
+```css
+--wall-black: #000000;    /* Do not change - pure black required */
+--card-gray: #888888;     /* Card backgrounds, borders */
+--text-white: #FFFFFF;    /* Primary text */
+--accent-green: #23CE6B;  /* Primary brand color */
+--accent-blue: #2541B2;   /* Secondary (currently unused) */
+```
+**Important:** Maintain pure black background (#000000) - no gradients
+
+### Adjusting Floating Animation
+Edit `@keyframes float-gentle` in `<style>` section (around line 169):
+- Default: 3px vertical movement over 5s
+- Tablet: 2px movement (defined in media query)
+- Mobile: 1px movement (defined in media query)
+- To disable: Set `animation: none` on `.business-card`
+
+### Adjusting Hover Extrusion
+Edit `.business-card:hover` styles (around line 179):
+- Z-axis extrusion: `translate3d(0, -3px, 10px)` - change `10px` for more/less depth
+- Shadow depth: `0 20px 40px` - adjust spread
+- Green glow: `0 0 0 2px rgba(35,206,107,0.4)` - adjust opacity
 
 ## Deployment
 
 ### GitHub Pages
-1. Push to main branch
+1. Push to master branch
 2. Enable Pages in repository settings
-3. Set source to main branch root
+3. Set source to master branch root
 4. Access at `https://username.github.io/repo-name/`
 5. Add CNAME file to root for custom domain
 
@@ -177,12 +243,14 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
 
 ### Deployment Checklist
 - Verify all image paths are correct
-- Test theme toggle functionality
+- Test floating animations in production
 - Check all external links
 - Validate HTML (validator.w3.org)
 - Test on mobile devices
 - Verify favicon appears correctly
 - Check Open Graph preview (opengraph.xyz)
+- Test keyboard navigation (Tab key)
+- Verify reduced motion works
 
 ## Technical Notes
 
@@ -196,17 +264,19 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
 
 ### Browser Compatibility
 - Modern browsers (Chrome, Firefox, Safari, Edge - last 2 versions)
-- Requires JavaScript for theme toggle, UTM forwarding, and keyboard nav
+- Requires JavaScript for UTM forwarding and dynamic year
 - CSS Grid and Flexbox for layout
 - CSS Custom Properties for theming
-- LocalStorage API for theme persistence
+- 3D transforms (supported since 2012, 99%+ coverage)
+- No cutting-edge CSS features
 
 ### Performance
 - Minimal external requests (Google Fonts + icons only)
 - No JavaScript frameworks or libraries
 - Inline CSS/JS eliminates round trips
-- Small page weight: ~10-15KB HTML + ~220KB images
+- Small page weight: ~15KB HTML + ~220KB images
 - Fast First Contentful Paint (no render-blocking resources)
+- GPU-accelerated animations for 60fps performance
 
 ### Security
 - All external links use `rel="noopener"` to prevent reverse tabnabbing
@@ -217,11 +287,15 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
 ### Accessibility
 - Semantic HTML5 elements
 - ARIA labels on all interactive elements
-- Keyboard navigation support (Tab, Enter, 1-9 keys)
-- Focus indicators on all focusable elements
+- Keyboard navigation support (Tab, Enter)
+- Focus indicators on all focusable elements (green outline)
 - Reduced motion support for animations
-- Sufficient color contrast in both themes
-- Alt text on all images
+- Excellent color contrast:
+  - White on Black: 21:1 (AAA)
+  - Green on Black: 8.4:1 (AAA)
+  - White on Gray: 4.6:1 (AA)
+- Alt text on images (empty alt on decorative icons)
+- Minimum 44px touch targets on mobile
 
 ## File Structure Reference
 
@@ -235,9 +309,9 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
 ├── public_html/                  # Empty (FTP deployment staging)
 ├── assets/
 │   ├── css/
-│   │   └── styles.css           # Alternative stylesheet (unused)
+│   │   └── styles.css           # Old stylesheet (unused)
 │   ├── js/
-│   │   └── main.js              # Utility functions (unused)
+│   │   └── main.js              # Old utility functions (unused)
 │   └── img/
 │       ├── pfp-square.jpeg      # Profile photo (USED)
 │       ├── dink-boys-logo.png   # Dink Boys logo (USED)
@@ -253,47 +327,52 @@ Add query parameters to URL (e.g., `index.html?utm_source=test&utm_campaign=laun
     └── scwlkr-logo_V1.ai        # Illustrator source file
 ```
 
-## Maintenance
-
-### Regular Updates
-- Update social media links/handles as needed
-- Add/remove featured links based on current projects
-- Update bio text in header
-- Refresh profile photo if desired
-
-### Seasonal/Periodic Tasks
-- No manual year updates needed (JavaScript handles copyright year)
-- Monitor external CDN uptime (Google Fonts, Simple Icons)
-- Check for broken links periodically
-- Update Open Graph image if changing branding
-
-### Code Quality
-- Validate HTML after changes: https://validator.w3.org/
-- Test accessibility: https://wave.webaim.org/
-- Check performance: https://pagespeed.web.dev/
-- Verify mobile responsive: Use browser DevTools
-
 ## Common Tasks
 
 ### Change Profile Photo
-Replace `/assets/img/pfp-square.jpeg` with new image (square aspect ratio recommended, ~82-100px display size).
+Replace `/assets/img/pfp-square.jpeg` with new image (square aspect ratio recommended, displayed at 50px on desktop, 60px on mobile).
+
+### Add New Business
+1. Add new `<a class="business-card">` to `.business-cards` section
+2. Include logo (48x48px), title, description, CTA
+3. Maintain consistent structure for animations to work
+4. Test floating animation with staggered delay
 
 ### Add New Social Platform
-1. Find icon on Simple Icons (simpleicons.org) or Iconify
-2. Add new `<a>` tag to `.social-grid` in index.html
-3. Use brand color for icon: `?color=%2323ce6b`
+1. Find icon on Simple Icons (simpleicons.org)
+2. Add new `<a class="personal-link">` to `.personal-links` section
+3. Use green color in URL: `?color=%2323ce6b`
 4. Add appropriate `aria-label` for accessibility
 
-### Modify Shimmer Effect
-Edit `@keyframes shimmer` in `<style>` section (around line 130-140). Adjust timing, gradient stops, or remove `animation` property from `.featured-link` class.
+### Modify Floating Intensity
+1. Edit `@keyframes float-gentle` - adjust from `-3px` to desired value
+2. Edit media queries for tablet/mobile - keep proportional reduction
+3. Test performance on lower-end devices
 
-### Disable UTM Forwarding
-Comment out or remove the UTM parameter forwarding code in the `<script>` section (around lines 350-365).
+### Disable Animations Entirely
+Add this to the `<style>` section:
+```css
+* {
+  animation: none !important;
+  transition: none !important;
+}
+```
 
-### Switch to Alternative Stylesheet
-1. Link `assets/css/styles.css` in `<head>`
-2. Remove or comment out embedded `<style>` block
-3. Note: Will require significant HTML changes for full compatibility
+### Change Grid Layout
+Edit `.business-cards` grid (line ~131):
+- Current: `repeat(auto-fit, minmax(280px, 1fr))` (responsive)
+- Fixed 3-column: `repeat(3, 1fr)`
+- Fixed 2-column: `repeat(2, 1fr)`
+
+## Design Principles to Maintain
+
+1. **No Gradients** - Keep solid black background, avoid radial/linear gradients
+2. **Strict Color Palette** - Only use the 5 defined colors
+3. **Perpetual Motion** - Floating animation should always be active (unless reduced motion)
+4. **3D Depth** - Maintain perspective and extrusion effects
+5. **Minimal Aesthetic** - No unnecessary decorations or effects
+6. **Performance First** - Keep animations GPU-accelerated, avoid heavy JS
+7. **Accessibility** - Maintain keyboard navigation and reduced motion support
 
 ## Version Control
 
@@ -303,3 +382,43 @@ This project uses Git with GitHub remote. The `.gitignore` excludes macOS system
 - **Branch:** `master` (main branch)
 - **No specific branch strategy** - direct commits to master acceptable for solo project
 - **Commit style:** Concise messages describing changes
+
+## Maintenance
+
+### Regular Updates
+- Update social media links/handles as needed
+- Add/remove business cards based on current projects
+- Update bio text in header if needed
+- Refresh profile photo if desired
+
+### Periodic Tasks
+- No manual year updates needed (JavaScript handles copyright year)
+- Monitor external CDN uptime (Google Fonts, Simple Icons)
+- Check for broken links periodically
+- Validate HTML after changes: https://validator.w3.org/
+- Test accessibility: https://wave.webaim.org/
+- Check performance: https://pagespeed.web.dev/
+
+## Troubleshooting
+
+### Animations Not Working
+- Check browser DevTools console for errors
+- Verify `perspective` is set on body
+- Ensure `transform-style: preserve-3d` is on cards
+- Check if reduced motion is enabled in OS settings
+
+### Hover Effect Not Appearing
+- Verify `:hover` styles are present
+- Check if on touch device (hover disabled intentionally)
+- Ensure `!important` is on transform to override animation
+
+### Layout Breaking on Mobile
+- Test at exact breakpoints (960px, 560px)
+- Check for media query conflicts
+- Verify grid template columns in responsive sections
+
+### Icons Not Loading
+- Check CDN URLs (Simple Icons, Iconify)
+- Verify green color parameter: `?color=%2323ce6b`
+- Test network connectivity
+- Check browser console for 404 errors
