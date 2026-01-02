@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -19,7 +20,8 @@
   <!-- Google Fonts: JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <style>
     /* ===== COLOR SYSTEM ===== */
@@ -45,10 +47,10 @@
       --text-xl: 28px;
 
       /* Shadow layers */
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-      --shadow-lg: 0 20px 40px rgba(0,0,0,0.6);
-      --shadow-glow: 0 0 20px rgba(35,206,107,0.2);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 20px rgba(35, 206, 107, 0.2);
 
       /* Timing */
       --timing-fast: 0.15s;
@@ -65,14 +67,16 @@
     }
 
     body {
-      background: var(--wall-black); /* Solid black wall - no gradients */
+      background: var(--wall-black);
+      /* Solid black wall - no gradients */
       color: var(--text-white);
       font-family: 'JetBrains Mono', monospace;
       font-size: var(--text-base);
       font-weight: 400;
       line-height: 1.5;
       min-height: 100vh;
-      perspective: 1200px; /* Enable 3D space */
+      perspective: 1200px;
+      /* Enable 3D space */
       perspective-origin: center center;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -157,19 +161,30 @@
 
       /* Hover transition */
       transition: transform var(--timing-base) var(--easing-bounce),
-                  box-shadow var(--timing-base) ease;
+        box-shadow var(--timing-base) ease;
     }
 
     /* Stagger floating animation */
-    .business-card:nth-child(1) { animation-delay: 0s; }
-    .business-card:nth-child(2) { animation-delay: 0.6s; }
-    .business-card:nth-child(3) { animation-delay: 1.2s; }
+    .business-card:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .business-card:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+
+    .business-card:nth-child(3) {
+      animation-delay: 1.2s;
+    }
 
     /* Floating animation keyframes */
     @keyframes float-gentle {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translate3d(0, 0, 0);
       }
+
       50% {
         transform: translate3d(0, -3px, 0);
       }
@@ -177,7 +192,8 @@
 
     /* Hover: 3D extrusion effect */
     .business-card:hover {
-      transform: translate3d(0, -3px, 10px) !important; /* Override float */
+      transform: translate3d(0, -3px, 10px) !important;
+      /* Override float */
       box-shadow:
         var(--shadow-lg),
         0 0 0 2px rgba(35, 206, 107, 0.4),
@@ -261,17 +277,44 @@
 
     /* Lighter floating for personal links */
     @keyframes float-gentle-light {
-      0%, 100% { transform: translate3d(0, 0, 0); }
-      50% { transform: translate3d(0, -1px, 0); }
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: translate3d(0, -1px, 0);
+      }
     }
 
-    .personal-link:nth-child(2) { animation-delay: 0.2s; }
-    .personal-link:nth-child(3) { animation-delay: 0.4s; }
-    .personal-link:nth-child(4) { animation-delay: 0.6s; }
-    .personal-link:nth-child(5) { animation-delay: 0.8s; }
-    .personal-link:nth-child(6) { animation-delay: 1.0s; }
-    .personal-link:nth-child(7) { animation-delay: 1.2s; }
-    .personal-link:nth-child(8) { animation-delay: 1.4s; }
+    .personal-link:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .personal-link:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    .personal-link:nth-child(4) {
+      animation-delay: 0.6s;
+    }
+
+    .personal-link:nth-child(5) {
+      animation-delay: 0.8s;
+    }
+
+    .personal-link:nth-child(6) {
+      animation-delay: 1.0s;
+    }
+
+    .personal-link:nth-child(7) {
+      animation-delay: 1.2s;
+    }
+
+    .personal-link:nth-child(8) {
+      animation-delay: 1.4s;
+    }
 
     .personal-link:hover {
       background: rgba(136, 136, 136, 0.12);
@@ -323,8 +366,15 @@
 
       /* Reduce floating on tablet */
       @keyframes float-gentle {
-        0%, 100% { transform: translate3d(0, 0, 0); }
-        50% { transform: translate3d(0, -2px, 0); }
+
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+
+        50% {
+          transform: translate3d(0, -2px, 0);
+        }
       }
     }
 
@@ -357,13 +407,27 @@
 
       /* Minimal floating on mobile */
       @keyframes float-gentle {
-        0%, 100% { transform: translate3d(0, 0, 0); }
-        50% { transform: translate3d(0, -1px, 0); }
+
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+
+        50% {
+          transform: translate3d(0, -1px, 0);
+        }
       }
 
       @keyframes float-gentle-light {
-        0%, 100% { transform: translate3d(0, 0, 0); }
-        50% { transform: translate3d(0, -0.5px, 0); }
+
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+
+        50% {
+          transform: translate3d(0, -0.5px, 0);
+        }
       }
 
       .footer {
@@ -404,6 +468,7 @@
 
     /* ===== REDUCED MOTION SUPPORT ===== */
     @media (prefers-reduced-motion: reduce) {
+
       *,
       *::before,
       *::after {
@@ -425,8 +490,149 @@
       white-space: nowrap;
       border: 0;
     }
+
+    /* ===== RANDOM X POST SECTION ===== */
+    .random-tweet-section {
+      margin-top: 48px;
+      animation: float-gentle 5s ease-in-out infinite;
+      animation-delay: 1.8s;
+      /* Stagger after business cards */
+      transform-style: preserve-3d;
+    }
+
+    .section-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--card-gray);
+      text-align: center;
+      margin-bottom: var(--space-lg);
+      letter-spacing: -0.01em;
+    }
+
+    .tweet-display {
+      background: rgba(136, 136, 136, 0.12);
+      border: 1px solid rgba(136, 136, 136, 0.2);
+      padding: var(--space-xl);
+      max-width: 600px;
+      margin: 0 auto;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform var(--timing-base) var(--easing-bounce),
+        box-shadow var(--timing-base) ease;
+      box-shadow:
+        var(--shadow-md),
+        0 0 0 1px rgba(136, 136, 136, 0.2);
+    }
+
+    .tweet-display:hover {
+      transform: translate3d(0, -3px, 10px) !important;
+      box-shadow:
+        var(--shadow-lg),
+        0 0 0 2px rgba(35, 206, 107, 0.4),
+        var(--shadow-glow);
+    }
+
+    .tweet-loading,
+    .tweet-error {
+      text-align: center;
+      color: var(--card-gray);
+      font-size: var(--text-sm);
+      padding: var(--space-lg);
+    }
+
+    .tweet-error {
+      color: #ff6b6b;
+    }
+
+    .tweet-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid rgba(136, 136, 136, 0.2);
+    }
+
+    .tweet-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(136, 136, 136, 0.3);
+    }
+
+    .tweet-author-info {
+      flex: 1;
+    }
+
+    .tweet-author-name {
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--text-white);
+    }
+
+    .tweet-author-handle {
+      font-size: var(--text-xs);
+      color: var(--card-gray);
+    }
+
+    .tweet-text {
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      color: var(--text-white);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .tweet-text a {
+      color: var(--accent-green);
+      text-decoration: none;
+      transition: color var(--timing-fast);
+    }
+
+    .tweet-text a:hover {
+      color: var(--text-white);
+      text-decoration: underline;
+    }
+
+    .tweet-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--space-md);
+      border-top: 1px solid rgba(136, 136, 136, 0.2);
+      font-size: var(--text-xs);
+      color: var(--card-gray);
+    }
+
+    .tweet-link {
+      color: var(--accent-green);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--timing-fast);
+    }
+
+    .tweet-link:hover {
+      color: var(--text-white);
+    }
+
+    /* Responsive adjustments for tweet section */
+    @media (max-width: 559px) {
+      .random-tweet-section {
+        margin-top: var(--space-xl);
+      }
+
+      .tweet-display {
+        padding: var(--space-lg);
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <!-- Header: Minimal profile -->
@@ -444,15 +650,19 @@
       <main>
         <div class="business-cards">
           <!-- The Media Hangar -->
-          <a href="https://themediahangar.com" target="_blank" rel="noopener" class="business-card" aria-label="The Media Hangar - Real estate media and production">
-            <img src="https://images.squarespace-cdn.com/content/v1/66071afd6c7fa060a948fdbe/6d140f5a-8ae8-4009-811e-017a60287cf0/TMH+Logo_White+Logo.png?format=300w" alt="The Media Hangar" class="business-logo" />
+          <a href="https://themediahangar.com" target="_blank" rel="noopener" class="business-card"
+            aria-label="The Media Hangar - Real estate media and production">
+            <img
+              src="https://images.squarespace-cdn.com/content/v1/66071afd6c7fa060a948fdbe/6d140f5a-8ae8-4009-811e-017a60287cf0/TMH+Logo_White+Logo.png?format=300w"
+              alt="The Media Hangar" class="business-logo" />
             <h2>The Media Hangar</h2>
             <p class="description">Real estate media & production in Dallas-Fort Worth</p>
             <span class="cta">Visit site →</span>
           </a>
 
           <!-- Dink Boys -->
-          <a href="https://dinkboys.com" target="_blank" rel="noopener" class="business-card" aria-label="Dink Boys - Pickleball brand">
+          <a href="https://dinkboys.com" target="_blank" rel="noopener" class="business-card"
+            aria-label="Dink Boys - Pickleball brand">
             <img src="assets/img/dink-boys-logo.png" alt="Dink Boys" class="business-logo" />
             <h2>Dink Boys</h2>
             <p class="description">Pickleball brand for the modern athlete</p>
@@ -460,13 +670,23 @@
           </a>
 
           <!-- DFFW Daily -->
-          <a href="https://dffwdaily.com" target="_blank" rel="noopener" class="business-card" aria-label="DFFW Daily - Dallas-Fort Worth news and stories">
-            <img src="https://dffwdaily.com/wp-content/uploads/2025/07/cropped-IMG_0087-128x128.png" alt="DFFW Daily" class="business-logo" />
+          <a href="https://dffwdaily.com" target="_blank" rel="noopener" class="business-card"
+            aria-label="DFFW Daily - Dallas-Fort Worth news and stories">
+            <img src="https://dffwdaily.com/wp-content/uploads/2025/07/cropped-IMG_0087-128x128.png" alt="DFFW Daily"
+              class="business-logo" />
             <h2>DFFW Daily</h2>
             <p class="description">Dallas-Fort Worth news, stories & local updates</p>
             <span class="cta">Visit site →</span>
           </a>
         </div>
+
+        <!-- Random X Post Section -->
+        <section class="random-tweet-section">
+          <h2 class="section-title">Latest from X</h2>
+          <div id="tweet-container" class="tweet-display">
+            <div class="tweet-loading">Loading...</div>
+          </div>
+        </section>
       </main>
 
       <!-- Personal links: Sidebar -->
@@ -474,12 +694,14 @@
         <nav class="personal-links">
           <h2 class="personal-links-title">Connect</h2>
 
-          <a href="https://instagram.com/scwlkr_" target="_blank" rel="noopener" class="personal-link" aria-label="Instagram">
+          <a href="https://instagram.com/scwlkr_" target="_blank" rel="noopener" class="personal-link"
+            aria-label="Instagram">
             <img src="https://cdn.simpleicons.org/instagram/23ce6b" alt="" class="link-icon" />
             <span>Instagram</span>
           </a>
 
-          <a href="https://www.tiktok.com/@scwlkr" target="_blank" rel="noopener" class="personal-link" aria-label="TikTok">
+          <a href="https://www.tiktok.com/@scwlkr" target="_blank" rel="noopener" class="personal-link"
+            aria-label="TikTok">
             <img src="https://cdn.simpleicons.org/tiktok/23ce6b" alt="" class="link-icon" />
             <span>TikTok</span>
           </a>
@@ -489,12 +711,14 @@
             <span>X</span>
           </a>
 
-          <a href="https://linkedin.com/in/shane-walker-384a671a3" target="_blank" rel="noopener" class="personal-link" aria-label="LinkedIn">
+          <a href="https://linkedin.com/in/shane-walker-384a671a3" target="_blank" rel="noopener" class="personal-link"
+            aria-label="LinkedIn">
             <img src="https://api.iconify.design/entypo-social:linkedin.svg?color=%2323ce6b" alt="" class="link-icon" />
             <span>LinkedIn</span>
           </a>
 
-          <a href="https://letterboxd.com/movieswitboat" target="_blank" rel="noopener" class="personal-link" aria-label="Letterboxd">
+          <a href="https://letterboxd.com/movieswitboat" target="_blank" rel="noopener" class="personal-link"
+            aria-label="Letterboxd">
             <img src="https://cdn.simpleicons.org/letterboxd/23ce6b" alt="" class="link-icon" />
             <span>Letterboxd</span>
           </a>
@@ -543,6 +767,81 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('no-motion');
     }
+
+    // Fetch and display random X post from Vercel API
+    async function loadRandomTweet() {
+      const container = document.getElementById('tweet-container');
+
+      try {
+        // TODO: Replace this URL with your actual Vercel deployment URL after deploying
+        // Example: 'https://scwlkr.vercel.app/api/tweets'
+        const apiUrl = 'https://scwlkr.vercel.app/api/tweets';
+
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
+          },
+          // Browser caches for 24 hours
+          cache: 'default'
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.tweets || data.tweets.length === 0) {
+          throw new Error('No tweets available');
+        }
+
+        // Pick a random tweet from the array
+        const randomTweet = data.tweets[Math.floor(Math.random() * data.tweets.length)];
+
+        // Extract tweet data
+        const tweetId = randomTweet.id;
+        const tweetText = randomTweet.text;
+        const tweetDate = new Date(randomTweet.created_at).toLocaleDateString();
+        const tweetUrl = `https://x.com/scwlkr/status/${tweetId}`;
+
+        // Display tweet with custom styling (matches site design)
+        container.innerHTML = `
+          <div class="tweet-content">
+            <div class="tweet-header">
+              <img src="assets/img/pfp-square.jpeg" alt="scwlkr" class="tweet-avatar" />
+              <div class="tweet-author-info">
+                <div class="tweet-author-name">Shane Walker</div>
+                <div class="tweet-author-handle">@scwlkr</div>
+              </div>
+            </div>
+            <div class="tweet-text">${escapeHtml(tweetText)}</div>
+            <div class="tweet-footer">
+              <span>${tweetDate}</span>
+              <a href="${tweetUrl}" target="_blank" rel="noopener" class="tweet-link">View on X →</a>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error loading tweet:', error);
+        container.innerHTML = `
+          <div class="tweet-error">
+            Unable to load post. <a href="https://x.com/scwlkr" target="_blank" rel="noopener" style="color: var(--accent-green);">Visit @scwlkr on X</a>
+          </div>
+        `;
+      }
+    }
+
+    // Helper function to escape HTML and prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Load tweet when page loads
+    loadRandomTweet();
   </script>
 </body>
+
 </html>
