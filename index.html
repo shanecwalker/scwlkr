@@ -494,50 +494,44 @@
     /* ===== RANDOM X POST SECTION ===== */
     .random-tweet-section {
       margin-top: 48px;
-      animation: float-gentle 5s ease-in-out infinite;
-      animation-delay: 1.8s;
+      animation: float-gentle-light 4s ease-in-out infinite;
+      animation-delay: 1.6s;
       /* Stagger after business cards */
       transform-style: preserve-3d;
     }
 
     .section-title {
-      font-size: var(--text-base);
+      font-size: var(--text-xs);
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--card-gray);
-      text-align: center;
-      margin-bottom: var(--space-lg);
-      letter-spacing: -0.01em;
+      margin-bottom: var(--space-md);
     }
 
     .tweet-display {
-      background: rgba(136, 136, 136, 0.12);
-      border: 1px solid rgba(136, 136, 136, 0.2);
-      padding: var(--space-xl);
-      max-width: 600px;
-      margin: 0 auto;
+      background: rgba(136, 136, 136, 0.06);
+      border: 1px solid rgba(136, 136, 136, 0.15);
+      padding: var(--space-md);
+      width: 100%;
+      /* Full width like business cards area */
       transform-style: preserve-3d;
       will-change: transform;
-      transition: transform var(--timing-base) var(--easing-bounce),
-        box-shadow var(--timing-base) ease;
-      box-shadow:
-        var(--shadow-md),
-        0 0 0 1px rgba(136, 136, 136, 0.2);
+      transition: all var(--timing-fast) ease;
     }
 
     .tweet-display:hover {
-      transform: translate3d(0, -3px, 10px) !important;
-      box-shadow:
-        var(--shadow-lg),
-        0 0 0 2px rgba(35, 206, 107, 0.4),
-        var(--shadow-glow);
+      background: rgba(136, 136, 136, 0.12);
+      border-color: rgba(35, 206, 107, 0.4);
+      transform: translate3d(0, -1px, 5px) !important;
+      box-shadow: var(--shadow-sm), var(--shadow-glow);
     }
 
     .tweet-loading,
     .tweet-error {
-      text-align: center;
       color: var(--card-gray);
       font-size: var(--text-sm);
-      padding: var(--space-lg);
+      padding: var(--space-md);
     }
 
     .tweet-error {
@@ -547,22 +541,22 @@
     .tweet-content {
       display: flex;
       flex-direction: column;
-      gap: var(--space-md);
+      gap: var(--space-sm);
     }
 
     .tweet-header {
       display: flex;
       align-items: center;
-      gap: var(--space-md);
-      padding-bottom: var(--space-md);
-      border-bottom: 1px solid rgba(136, 136, 136, 0.2);
+      gap: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid rgba(136, 136, 136, 0.1);
     }
 
     .tweet-avatar {
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 1px solid rgba(136, 136, 136, 0.3);
+      border: 1px solid rgba(136, 136, 136, 0.2);
     }
 
     .tweet-author-info {
@@ -603,8 +597,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: var(--space-md);
-      border-top: 1px solid rgba(136, 136, 136, 0.2);
+      padding-top: var(--space-sm);
+      border-top: 1px solid rgba(136, 136, 136, 0.1);
       font-size: var(--text-xs);
       color: var(--card-gray);
     }
@@ -620,14 +614,15 @@
       color: var(--text-white);
     }
 
+    /* X embed widget styling to match */
+    .tweet-display .twitter-tweet {
+      margin: 0 !important;
+    }
+
     /* Responsive adjustments for tweet section */
     @media (max-width: 559px) {
       .random-tweet-section {
         margin-top: var(--space-xl);
-      }
-
-      .tweet-display {
-        padding: var(--space-lg);
       }
     }
   </style>
@@ -682,7 +677,7 @@
 
         <!-- Random X Post Section -->
         <section class="random-tweet-section">
-          <h2 class="section-title">Latest from X</h2>
+          <h2 class="section-title">From X</h2>
           <div id="tweet-container" class="tweet-display">
             <div class="tweet-loading">Loading...</div>
           </div>
@@ -772,20 +767,23 @@
     async function loadRandomTweet() {
       const container = document.getElementById('tweet-container');
 
-      // FALLBACK: Manually curated tweet IDs (works immediately, no API needed!)
-      // TODO: Replace these with your actual tweet URLs from https://x.com/scwlkr
-      // To add more: Copy tweet URL, extract the number at the end, add to this array
-      const fallbackTweetIDs = [
-        'https://x.com/scwlkr/status/1993304027962937453?s=20',  // Replace with your tweet IDs
+      // FALLBACK: Manually curated tweet URLs/IDs (works immediately, no API needed!)
+      // To add more: Copy tweet URL from X and paste it here
+      const fallbackTweetURLs = [
+        'https://x.com/scwlkr/status/1993304027962937453?s=20',
         'https://x.com/scwlkr/status/2005709805550530834?s=20',
         'https://x.com/scwlkr/status/2003579198590582812?s=20',
         'https://x.com/scwlkr/status/2003157248756133977?s=20',
         'https://x.com/scwlkr/status/1998403606349787148?s=20',
         'https://x.com/scwlkr/status/1996329016417010170?s=20',
         'https://x.com/scwlkr/status/1995835784738603243?s=20',
-        // Example: https://x.com/scwlkr/status/1234567890123456789
-        // Add more tweet IDs here (5-10 recommended)
       ];
+
+      // Extract tweet IDs from URLs
+      const fallbackTweetIDs = fallbackTweetURLs.map(url => {
+        const match = url.match(/status\/(\d+)/);
+        return match ? match[1] : url;
+      });
 
       try {
         // Try Vercel API first (uses your X API quota)
@@ -832,33 +830,64 @@
         throw new Error('API unavailable, using fallback');
 
       } catch (error) {
-        console.log('Using fallback tweet embed (API unavailable):', error.message);
+        console.log('API unavailable, trying fallback tweets:', error.message);
 
-        // Use fallback: X's official embed widget (no API quota needed!)
-        if (fallbackTweetIDs.length > 0 && fallbackTweetIDs[0] !== '1234567890123456789') {
+        // Fallback: Use X's public oEmbed API (no authentication required!)
+        if (fallbackTweetIDs.length > 0) {
           const randomId = fallbackTweetIDs[Math.floor(Math.random() * fallbackTweetIDs.length)];
+          const tweetUrl = `https://x.com/scwlkr/status/${randomId}`;
 
-          // Create X embed blockquote
-          container.innerHTML = `
-            <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
-              <a href="https://twitter.com/scwlkr/status/${randomId}"></a>
-            </blockquote>
-          `;
+          // Try to fetch tweet data from oEmbed API
+          fetch(`https://publish.twitter.com/oembed?url=${encodeURIComponent(tweetUrl)}&omit_script=true`)
+            .then(res => res.json())
+            .then(data => {
+              // Extract text from HTML (remove links and extra markup)
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = data.html;
+              const tweetTextElement = tempDiv.querySelector('p');
+              const tweetText = tweetTextElement ? tweetTextElement.textContent : 'View this post on X';
 
-          // Load X's embed script
-          if (!document.querySelector('script[src*="platform.twitter.com"]')) {
-            const script = document.createElement('script');
-            script.src = 'https://platform.twitter.com/widgets.js';
-            script.async = true;
-            document.body.appendChild(script);
-          } else {
-            // Script already loaded, just render the widget
-            if (window.twttr && window.twttr.widgets) {
-              window.twttr.widgets.load();
-            }
-          }
+              // Display with custom styling
+              container.innerHTML = `
+                <div class="tweet-content">
+                  <div class="tweet-header">
+                    <img src="assets/img/pfp-square.jpeg" alt="scwlkr" class="tweet-avatar" />
+                    <div class="tweet-author-info">
+                      <div class="tweet-author-name">Shane Walker</div>
+                      <div class="tweet-author-handle">@scwlkr</div>
+                    </div>
+                  </div>
+                  <div class="tweet-text">${escapeHtml(tweetText)}</div>
+                  <div class="tweet-footer">
+                    <span>—</span>
+                    <a href="${tweetUrl}" target="_blank" rel="noopener" class="tweet-link">View on X →</a>
+                  </div>
+                </div>
+              `;
+            })
+            .catch(oEmbedError => {
+              // oEmbed failed too - show simple placeholder
+              console.log('oEmbed also failed:', oEmbedError);
+              container.innerHTML = `
+                <div class="tweet-content">
+                  <div class="tweet-header">
+                    <img src="assets/img/pfp-square.jpeg" alt="scwlkr" class="tweet-avatar" />
+                    <div class="tweet-author-info">
+                      <div class="tweet-author-name">Shane Walker</div>
+                      <div class="tweet-author-handle">@scwlkr</div>
+                    </div>
+                  </div>
+                  <div class="tweet-text" style="font-style: italic; color: var(--card-gray);">
+                    View my latest posts on X
+                  </div>
+                  <div class="tweet-footer">
+                    <span>—</span>
+                    <a href="${tweetUrl}" target="_blank" rel="noopener" class="tweet-link">View on X →</a>
+                  </div>
+                </div>
+              `;
+            });
         } else {
-          // No fallback tweets configured yet
           container.innerHTML = `
             <div class="tweet-error">
               Unable to load post. <a href="https://x.com/scwlkr" target="_blank" rel="noopener" style="color: var(--accent-green);">Visit @scwlkr on X</a>

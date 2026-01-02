@@ -16,6 +16,9 @@ A unique "hovering bricks" link-in-bio page for **scwlkr** (Shane Walker). Featu
 - **DFFW Daily** - Dallas-Fort Worth news & local stories
 - **Dink Boys** - Pickleball brand
 
+## Dynamic Content
+- **Random X Post** - Displays a random post from @scwlkr with 3-tier fallback system (Vercel API → oEmbed API → placeholder)
+
 ## Features
 
 ### Visual Design
@@ -79,6 +82,24 @@ Edit `.personal-links` section in `index.html`:
 </a>
 ```
 Find icons at [simpleicons.org](https://simpleicons.org) - add `?color=%2323ce6b` for green.
+
+### Update Random X Posts
+Edit the `fallbackTweetURLs` array in `index.html` (line ~772):
+```javascript
+const fallbackTweetURLs = [
+  'https://x.com/scwlkr/status/1993304027962937453',
+  // Add more tweet URLs from your account
+];
+```
+The system automatically:
+1. Tries Vercel API first (when quota available)
+2. Falls back to oEmbed API (free, no quota)
+3. Displays with custom site styling
+
+**Setup Vercel API (optional, for automatic updates):**
+- See `api/tweets.js` for serverless function
+- Requires X API credentials in Vercel environment variables
+- See CLAUDE.md for full setup instructions
 
 ### Adjust Colors
 Edit CSS variables in `index.html` (lines ~26-31):
@@ -148,6 +169,9 @@ scwlkr/
 ├── README.md               # This file
 ├── CLAUDE.md               # Developer documentation
 ├── CHANGELOG.md            # Version history
+├── vercel.json             # Vercel configuration
+├── api/
+│   └── tweets.js           # Serverless function for X API
 ├── assets/
 │   ├── img/
 │   │   ├── pfp-square.jpeg     # Profile photo
@@ -208,8 +232,8 @@ Unlike typical link-in-bio sites:
 
 ## Version
 
-**Current:** 2.0.0 (Complete redesign - 2026-01-01)
-**Previous:** 1.0.0 (Original centered card layout - 2025-10-04)
+**Current:** 2.1.0 (Added random X post feature - 2026-01-02)
+**Previous:** 2.0.0 (Complete redesign - 2026-01-01)
 
 See [CHANGELOG.md](CHANGELOG.md) for full version history.
 
@@ -228,4 +252,5 @@ Personal project - all rights reserved.
 **Built with:** Pure HTML, CSS, JavaScript (no frameworks)
 **Font:** JetBrains Mono via Google Fonts
 **Icons:** Simple Icons CDN + Iconify
+**API:** Vercel Serverless Functions + X API v2 + oEmbed
 **Inspired by:** Apple • Nike • Stripe • BAUHAUS

@@ -35,8 +35,14 @@ This is a static link-in-bio website for scwlkr (Shane Walker) featuring a uniqu
 - **assets/css/styles.css** - Old stylesheet with different theme approach (NOT linked in index.html)
 - **assets/js/main.js** - Utility functions for copy-to-clipboard and reduced motion (NOT linked in index.html)
 
+### Vercel Serverless API
+- **api/tweets.js** - Serverless function that fetches tweets from X API v2
+- **vercel.json** - Vercel configuration with caching and CORS headers
+- Requires environment variables: `TWITTER_BEARER_TOKEN`, `TWITTER_USER_ID`
+
 ### Deployment
 - **public_html/** - Empty directory for Hostinger/FTP deployment staging
+- **Vercel** - Primary deployment at scwlkr.vercel.app
 
 ## index.html - Complete Feature Reference
 
@@ -55,7 +61,8 @@ This is a static link-in-bio website for scwlkr (Shane Walker) featuring a uniqu
 ├── <header> - Minimal profile (50px photo + name + bio)
 ├── <div class="main-layout"> (grid: main + sidebar on desktop)
 │   ├── <main> - Business cards section
-│   │   └── .business-cards (3 floating cards in responsive grid)
+│   │   ├── .business-cards (3 floating cards in responsive grid)
+│   │   └── .random-tweet-section (1 dynamic X post, full width)
 │   └── <aside> - Personal links sidebar (7 compact links)
 └── <footer> - Copyright with dynamic year
 ```
@@ -81,7 +88,13 @@ This is a static link-in-bio website for scwlkr (Shane Walker) featuring a uniqu
    - Discord (@scwlkr)
    - Email (scwlkr8@gmail.com)
 
-4. **Footer** - Simple copyright with dynamic year
+4. **Random X Post Section** (dynamic content):
+   - Displays one random post from @scwlkr X account
+   - Styled to match personal links (compact, minimal design)
+   - 3-tier fallback system for reliability
+   - Full width spanning business cards area
+
+5. **Footer** - Simple copyright with dynamic year
 
 ### CSS Features (Embedded)
 
@@ -161,6 +174,16 @@ This is a static link-in-bio website for scwlkr (Shane Walker) featuring a uniqu
    - Adds `.no-motion` class to document element (for potential future use)
    - CSS handles actual animation disabling via media query
 
+4. **Random X Post Fetching (3-tier fallback system):**
+   - **Tier 1:** Tries Vercel API (`/api/tweets`) which fetches from X API v2
+   - **Tier 2:** Falls back to X's public oEmbed API with curated tweet list
+   - **Tier 3:** Shows placeholder if all services fail
+   - Tweet IDs extracted from `fallbackTweetURLs` array using regex
+   - Random selection from available tweets on each page load
+   - Custom rendering with site styling (not official X embed widget)
+   - XSS protection via `escapeHtml()` helper function
+   - Browser caching for 24 hours via Vercel headers
+
 **Removed Features (from previous version):**
 - Theme toggle system (fixed dark theme only)
 - Light theme support and localStorage persistence
@@ -202,6 +225,29 @@ Edit the `.personal-links` section in index.html:
 - Icons are 20x20px
 - Ensure minimum 44px touch target (handled by CSS)
 
+### Updating Random X Posts
+Edit the `fallbackTweetURLs` array in `index.html` (around line 772):
+```javascript
+const fallbackTweetURLs = [
+  'https://x.com/scwlkr/status/1993304027962937453',
+  'https://x.com/scwlkr/status/2005709805550530834',
+  // Add 5-10 of your favorite tweet URLs
+];
+```
+
+**How it works:**
+1. **Primary:** Tries Vercel serverless API (`/api/tweets`) which fetches from X API v2
+2. **Fallback:** Uses X's public oEmbed API to fetch tweet data from your curated list
+3. **Final fallback:** Shows placeholder if all services fail
+4. **Styling:** Always uses custom site styling (compact, minimal like personal links)
+5. **Random selection:** Picks a random tweet on each page load
+
+**The tweet displays:**
+- Profile photo (28px avatar)
+- Name and handle
+- Tweet text (with XSS protection via `escapeHtml()`)
+- Link to view on X
+
 ### Modifying Colors
 Edit CSS custom properties in `index.html` `:root` selector (lines ~26-31):
 ```css
@@ -241,6 +287,38 @@ Edit `.business-card:hover` styles (around line 179):
 3. Upload `assets/` and `logo/` directories with their contents
 4. Set file permissions (644 for files, 755 for directories)
 
+### Vercel (with Serverless API for X Posts)
+**Prerequisites:**
+- X API credentials (Bearer token + User ID)
+- Vercel account
+
+**Setup:**
+1. Install Vercel CLI: `npm install -g vercel`
+2. Login: `vercel login`
+3. Deploy: `vercel --prod`
+4. Add environment variables:
+   ```bash
+   vercel env add TWITTER_BEARER_TOKEN
+   vercel env add TWITTER_USER_ID
+   ```
+5. Redeploy: `vercel --prod`
+
+**File structure for Vercel:**
+- `api/tweets.js` - Serverless function (already created)
+- `vercel.json` - Configuration with caching headers (already configured)
+- Environment variables stored securely in Vercel dashboard
+
+**How it works:**
+- Vercel automatically detects `/api/*.js` files as serverless functions
+- Functions run on-demand with edge caching (24 hours configured)
+- X API credentials stored as encrypted environment variables
+- Frontend calls `/api/tweets` which proxies to X API v2
+
+**API Endpoint:**
+- Production: `https://scwlkr.vercel.app/api/tweets`
+- Returns JSON: `{ success: true, tweets: [...], count: 100 }`
+- Cached for 24 hours (`s-maxage=86400`)
+
 ### Deployment Checklist
 - Verify all image paths are correct
 - Test floating animations in production
@@ -261,6 +339,8 @@ Edit `.business-card:hover` styles (around line 179):
   - Google Fonts API (fonts.googleapis.com, fonts.gstatic.com)
   - Simple Icons CDN (cdn.simpleicons.org)
   - Iconify API (api.iconify.design)
+  - X oEmbed API (publish.twitter.com/oembed) - public, no auth
+  - Vercel Serverless Functions (optional, requires X API credentials)
 
 ### Browser Compatibility
 - Modern browsers (Chrome, Firefox, Safari, Edge - last 2 versions)

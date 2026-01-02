@@ -6,6 +6,64 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-01-02
+
+### Added - Random X Post Feature
+- **Random X post display** - Shows one random post from @scwlkr beneath business cards
+- **3-tier fallback system** for reliability:
+  1. Vercel serverless API calling X API v2 (when quota available)
+  2. X's public oEmbed API with curated tweet list (no auth required)
+  3. Placeholder with link to X profile (final fallback)
+- **Serverless API infrastructure** - `api/tweets.js` Vercel function
+- **Vercel configuration** - `vercel.json` with 24-hour edge caching
+- **Custom tweet styling** - Matches personal links aesthetic (compact, minimal)
+- **XSS protection** - `escapeHtml()` helper function for tweet text
+- **Tweet URL curation system** - Array of 7 fallback tweet URLs
+- **Automatic ID extraction** - Regex parsing of tweet IDs from full URLs
+- **Random selection** - Different tweet on each page load
+- **Floating animation** - Uses `float-gentle-light` (4s, 1px movement)
+- **Hover effect** - Subtle extrusion matching personal links style
+- **Full-width layout** - Spans entire business cards area width
+
+### Changed
+- **Layout architecture** - Added `.random-tweet-section` to main after business cards
+- **Section title styling** - "FROM X" with uppercase, letter-spacing matching "CONNECT"
+- **Tweet display design** - Semi-transparent background `rgba(136, 136, 136, 0.06)`, subtle border
+- **Avatar size** - 28px (smaller than business cards, matching link icon size)
+- **Spacing** - Compact padding (16px) matching personal links
+- **Animation** - Lighter floating (1px vs 3px for business cards)
+
+### Technical
+- **Vercel deployment** - Primary hosting at scwlkr.vercel.app
+- **Environment variables** - `TWITTER_BEARER_TOKEN`, `TWITTER_USER_ID` stored securely
+- **API endpoint** - `https://scwlkr.vercel.app/api/tweets`
+- **Caching strategy** - 24-hour edge cache (`s-maxage=86400`)
+- **CORS headers** - Configured for cross-origin requests
+- **X API v2** - Fetches 100 recent tweets (excluding retweets/replies)
+- **oEmbed API** - Public fallback at `publish.twitter.com/oembed`
+- **Regex pattern** - `/status\/(\d+)/` extracts tweet IDs from URLs
+
+### Files Added
+- `api/tweets.js` - Node.js serverless function (49 lines)
+- `vercel.json` - Vercel configuration with caching headers
+
+### Files Modified
+- `index.html` - Added random tweet section HTML, CSS (~140 lines), JavaScript (~130 lines)
+- `.gitignore` - Added `.vercel` directory
+- `README.md` - Documented X post feature and Vercel setup
+- `CLAUDE.md` - Added comprehensive implementation documentation
+- `CHANGELOG.md` - This file
+
+### Dependencies Added
+- **Vercel Serverless Functions** - For X API proxy (optional)
+- **X API v2** - Primary tweet data source (requires credentials)
+- **X oEmbed API** - Public fallback (no auth required)
+
+### Content
+- **Curated tweets** - 7 manually selected tweet URLs from @scwlkr:
+  - Tweet IDs: 1993304027962937453, 2005709805550530834, 2003579198590582812, 2003157248756133977, 1998403606349787148, 1996329016417010170, 1995835784738603243
+- **Section title** - "FROM X" (uppercase, gray, letter-spaced)
+
 ## [2.0.0] - 2026-01-01
 
 ### Added - Complete Website Redesign
@@ -182,4 +240,4 @@ This project follows semantic versioning principles:
 - **Minor version (0.X.0)** - New features or substantial updates
 - **Patch version (0.0.X)** - Bug fixes and minor tweaks
 
-Current version: 1.0.0 (stable release)
+Current version: 2.1.0 (stable release with X post feature)
