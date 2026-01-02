@@ -768,67 +768,103 @@
       document.documentElement.classList.add('no-motion');
     }
 
-    // Fetch and display random X post from Vercel API
+    // Fetch and display random X post
     async function loadRandomTweet() {
       const container = document.getElementById('tweet-container');
 
+      // FALLBACK: Manually curated tweet IDs (works immediately, no API needed!)
+      // TODO: Replace these with your actual tweet URLs from https://x.com/scwlkr
+      // To add more: Copy tweet URL, extract the number at the end, add to this array
+      const fallbackTweetIDs = [
+        'https://x.com/scwlkr/status/1993304027962937453?s=20',  // Replace with your tweet IDs
+        'https://x.com/scwlkr/status/2005709805550530834?s=20',
+        'https://x.com/scwlkr/status/2003579198590582812?s=20',
+        'https://x.com/scwlkr/status/2003157248756133977?s=20',
+        'https://x.com/scwlkr/status/1998403606349787148?s=20',
+        'https://x.com/scwlkr/status/1996329016417010170?s=20',
+        'https://x.com/scwlkr/status/1995835784738603243?s=20',
+        // Example: https://x.com/scwlkr/status/1234567890123456789
+        // Add more tweet IDs here (5-10 recommended)
+      ];
+
       try {
-        // TODO: Replace this URL with your actual Vercel deployment URL after deploying
-        // Example: 'https://scwlkr.vercel.app/api/tweets'
+        // Try Vercel API first (uses your X API quota)
         const apiUrl = 'https://scwlkr.vercel.app/api/tweets';
 
         const response = await fetch(apiUrl, {
           method: 'GET',
-          headers: {
-            'Accept': 'application/json'
-          },
-          // Browser caches for 24 hours
+          headers: { 'Accept': 'application/json' },
           cache: 'default'
         });
 
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
+        if (response.ok) {
+          const data = await response.json();
 
-        const data = await response.json();
+          if (data.success && data.tweets && data.tweets.length > 0) {
+            // API worked! Display random tweet from API
+            const randomTweet = data.tweets[Math.floor(Math.random() * data.tweets.length)];
+            const tweetId = randomTweet.id;
+            const tweetText = randomTweet.text;
+            const tweetDate = new Date(randomTweet.created_at).toLocaleDateString();
+            const tweetUrl = `https://x.com/scwlkr/status/${tweetId}`;
 
-        if (!data.success || !data.tweets || data.tweets.length === 0) {
-          throw new Error('No tweets available');
-        }
-
-        // Pick a random tweet from the array
-        const randomTweet = data.tweets[Math.floor(Math.random() * data.tweets.length)];
-
-        // Extract tweet data
-        const tweetId = randomTweet.id;
-        const tweetText = randomTweet.text;
-        const tweetDate = new Date(randomTweet.created_at).toLocaleDateString();
-        const tweetUrl = `https://x.com/scwlkr/status/${tweetId}`;
-
-        // Display tweet with custom styling (matches site design)
-        container.innerHTML = `
-          <div class="tweet-content">
-            <div class="tweet-header">
-              <img src="assets/img/pfp-square.jpeg" alt="scwlkr" class="tweet-avatar" />
-              <div class="tweet-author-info">
-                <div class="tweet-author-name">Shane Walker</div>
-                <div class="tweet-author-handle">@scwlkr</div>
+            container.innerHTML = `
+              <div class="tweet-content">
+                <div class="tweet-header">
+                  <img src="assets/img/pfp-square.jpeg" alt="scwlkr" class="tweet-avatar" />
+                  <div class="tweet-author-info">
+                    <div class="tweet-author-name">Shane Walker</div>
+                    <div class="tweet-author-handle">@scwlkr</div>
+                  </div>
+                </div>
+                <div class="tweet-text">${escapeHtml(tweetText)}</div>
+                <div class="tweet-footer">
+                  <span>${tweetDate}</span>
+                  <a href="${tweetUrl}" target="_blank" rel="noopener" class="tweet-link">View on X →</a>
+                </div>
               </div>
-            </div>
-            <div class="tweet-text">${escapeHtml(tweetText)}</div>
-            <div class="tweet-footer">
-              <span>${tweetDate}</span>
-              <a href="${tweetUrl}" target="_blank" rel="noopener" class="tweet-link">View on X →</a>
-            </div>
-          </div>
-        `;
+            `;
+            return;
+          }
+        }
+
+        // API failed or rate limited - fall back to manual tweet IDs
+        throw new Error('API unavailable, using fallback');
+
       } catch (error) {
-        console.error('Error loading tweet:', error);
-        container.innerHTML = `
-          <div class="tweet-error">
-            Unable to load post. <a href="https://x.com/scwlkr" target="_blank" rel="noopener" style="color: var(--accent-green);">Visit @scwlkr on X</a>
-          </div>
-        `;
+        console.log('Using fallback tweet embed (API unavailable):', error.message);
+
+        // Use fallback: X's official embed widget (no API quota needed!)
+        if (fallbackTweetIDs.length > 0 && fallbackTweetIDs[0] !== '1234567890123456789') {
+          const randomId = fallbackTweetIDs[Math.floor(Math.random() * fallbackTweetIDs.length)];
+
+          // Create X embed blockquote
+          container.innerHTML = `
+            <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+              <a href="https://twitter.com/scwlkr/status/${randomId}"></a>
+            </blockquote>
+          `;
+
+          // Load X's embed script
+          if (!document.querySelector('script[src*="platform.twitter.com"]')) {
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            document.body.appendChild(script);
+          } else {
+            // Script already loaded, just render the widget
+            if (window.twttr && window.twttr.widgets) {
+              window.twttr.widgets.load();
+            }
+          }
+        } else {
+          // No fallback tweets configured yet
+          container.innerHTML = `
+            <div class="tweet-error">
+              Unable to load post. <a href="https://x.com/scwlkr" target="_blank" rel="noopener" style="color: var(--accent-green);">Visit @scwlkr on X</a>
+            </div>
+          `;
+        }
       }
     }
 
