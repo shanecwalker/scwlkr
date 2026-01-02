@@ -510,8 +510,8 @@
     }
 
     .tweet-display {
-      background: rgba(136, 136, 136, 0.06);
-      border: 1px solid rgba(136, 136, 136, 0.15);
+      background: rgba(136, 136, 136, 0.08);
+      border: 1px solid rgba(136, 136, 136, 0.18);
       padding: var(--space-md);
       width: 100%;
       /* Full width like business cards area */
@@ -521,10 +521,15 @@
     }
 
     .tweet-display:hover {
-      background: rgba(136, 136, 136, 0.12);
+      background: rgba(136, 136, 136, 0.14);
       border-color: rgba(35, 206, 107, 0.4);
       transform: translate3d(0, -1px, 5px) !important;
       box-shadow: var(--shadow-sm), var(--shadow-glow);
+    }
+
+    /* Ensure inner content has no conflicting backgrounds */
+    .tweet-content {
+      background: transparent;
     }
 
     .tweet-loading,
